@@ -13,7 +13,7 @@ services:
     volumes_from:
         - php
     volumes:
-      - ../logs/nginx/:/var/log/nginx
+      - /logs/nginx/:/var/log/nginx
   php:
     build: php7
     container_name: magento_php
@@ -21,8 +21,8 @@ services:
     ports:
       - 9000:80
     volumes:
-      - ..:/var/www:cached
-      - ../logs:/var/logs
+      - .:/var/www:cached
+      - ./logs:/var/logs
   db:
     image: mariadb:latest
     container_name: magento_db
