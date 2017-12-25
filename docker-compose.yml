@@ -1,0 +1,42 @@
+version: '2'
+
+
+services:
+  nginx:
+    build: nginx # Dockerfile inside nginx folder
+    container_name: magento_nginx
+    image: magento/nginx:latest
+    ports:
+        - 14200:80
+    links:
+        - php
+    volumes_from:
+        - php
+    volumes:
+      - ../logs/nginx/:/var/log/nginx
+  php:
+    build: php7
+    container_name: magento_php
+    image: magento/php:latest
+    ports:
+      - 9000:80
+    volumes:
+      - ..:/var/www:cached
+      - ../logs:/var/logs
+  db:
+    image: mariadb:latest
+    container_name: magento_db
+    ports:
+      - 14202:3306
+    environment:
+      MYSQL_DATABASE: magento_db
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: magento_phpmyadmin
+    ports:
+        - "14203:80"
+    links:
+        - db
