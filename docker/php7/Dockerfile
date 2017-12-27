@@ -4,13 +4,17 @@ FROM php:7.1-fpm
 RUN apt-get update \
 	&& apt-get install -y \
 	git \
+        cron \
+        vim \
 	zlib1g-dev \
 	libmcrypt-dev \
 	supervisor \
 	openssh-server \
-	php-soap \
 	libpng-dev \
+        libjpeg-dev \
+        libfreetype6-dev \
 	libxslt-dev \
+	libxml2-dev \
 	libicu-dev \
     --no-install-recommends \
     && mkdir -p /var/log/supervisor \
