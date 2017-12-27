@@ -22,6 +22,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Install required PHP extensions
+RUN docker-php-ext-configure gd --with-jpeg-dir=/usr/include/ --with-freetype-dir=/usr/lib64/
 RUN docker-php-ext-install bcmath \
 	mbstring \
 	opcache \
