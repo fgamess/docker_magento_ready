@@ -65,6 +65,8 @@ RUN cat /tmp/php.ini_extension >> /usr/local/etc/php/php.ini \
 # COPY php7-fpm.conf /usr/local/etc/php-fpm.conf
 
 RUN usermod -u 1000 www-data
+RUN useradd -ms /bin/bash magento_user 
+RUN usermod -a -G www-data magento_user
 
 #CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 
