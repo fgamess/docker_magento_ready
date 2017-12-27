@@ -8,12 +8,12 @@ services:
     image: magento/nginx:latest
     ports:
         - 14200:80
+    volumes:
+      - ../logs/nginx/:/var/log/nginx:cached
     links:
         - php
     volumes_from:
         - php
-    volumes:
-      - /logs/nginx/:/var/log/nginx
   php:
     build: php7
     container_name: magento_php
@@ -21,8 +21,8 @@ services:
     ports:
       - 9000:80
     volumes:
-      - .:/var/www:cached
-      - ./logs:/var/logs
+      - ..:/var/www:cached
+      - ../logs/magento:/var/log/magento:cached
   db:
     image: mariadb:latest
     container_name: magento_db
@@ -30,9 +30,9 @@ services:
       - 14202:3306
     environment:
       MYSQL_DATABASE: magento_db
-      MYSQL_USER: root
-      MYSQL_PASSWORD: root
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: magento
+      MYSQL_PASSWORD: magento
+      MYSQL_ROOT_PASSWORD: magento
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: magento_phpmyadmin
