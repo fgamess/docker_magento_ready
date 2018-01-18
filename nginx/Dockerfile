@@ -1,17 +1,17 @@
-FROM debian:stretch
+FROM nginx
 
 MAINTAINER Franck GAMESS <xxxxxxx@gmail.com>
 
-RUN apt-get update && apt-get install -y \
-    nginx
-
 ADD nginx.conf /etc/nginx/
 ADD nginx.conf.sample /etc/nginx/
+RUN mkdir /etc/nginx/sites-available
 ADD magento /etc/nginx/sites-available/
 
-RUN ln -s /etc/nginx/sites-available/magento /etc/nginx/sites-enabled/magento
-RUN rm /etc/nginx/sites-enabled/default
-RUN rm /etc/nginx/sites-available/default
+RUN rm /etc/nginx/conf.d/default.conf
+
+ARG NGINX_HOST_ARG
+ENV NGINX_HOST $NGINX_HOST_ARG
+RUN envsubst '${NGINX_HOST}' < /etc/nginx/sites-available/magento > /etc/nginx/sites-available/magento
 
 #RUN echo "upstream php-upstream { server php:9000; }" > /etc/nginx/conf.d/upstream.conf
 

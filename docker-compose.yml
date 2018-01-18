@@ -3,26 +3,28 @@ version: '2'
 
 services:
   nginx:
-    build: nginx # Dockerfile inside nginx folder
+    build:
+        context: nginx
+        args:
+           - NGINX_HOST_ARG=localhost
     container_name: magento_nginx
-    image: magento/nginx:latest
+    image: fgamess/magento-nginx
     ports:
         - 14200:80
     volumes:
-      - ../logs/nginx/:/var/log/nginx:cached
+      - ./logs/nginx/:/var/log/nginx:cached
     links:
         - php
     volumes_from:
         - php
   php:
-    build: php7
     container_name: magento_php
-    image: magento/php:latest
+    image: fgamess/php7-stack-magento2.2
     ports:
       - 9000:80
     volumes:
-      - ..:/var/www:cached
-      - ../logs/magento:/var/log/magento:cached
+      - .:/var/www:cached
+      - ./logs/magento:/var/log/magento:cached
   db:
     image: mariadb:latest
     container_name: magento_db

@@ -7,7 +7,7 @@ upstream fastcgi_backend {
 }
 server {
     listen 80;
-    server_name localhost;
+    server_name ${NGINX_HOST};
     set $MAGE_ROOT /var/www;
     include nginx.conf.sample;
 }
