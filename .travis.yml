@@ -3,4 +3,5 @@ services:
   - docker
 
 script:
-  - docker image build .
+  - docker-compose build
+  - docker-compose up -d
